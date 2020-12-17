@@ -14,11 +14,11 @@ output:
 
 # Introduction
 
-It is not an overstatement to say that the default output for a Principal Components Analysis (PCA) biplot in R is <i>gross</i>.  The image below is the default biplot generated for the farm stress data discussed in detail <a href="https://www.waderstats.com/using-principal-components-analysis-pca-to-analyze-latino-stress-by-agricultural-season-and-occupation/" target="_blank">here</a>.  This presentation will show you how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative biplot [@ggplot2]. 
-
-Throughout, we will use the R programming language and assume the user is using Rstudio to compile their R markdown files into HTML [@Rlang2020; @Rstudio2020].  If you want to follow along with the R markdown, it is downloadable  <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/pretty_pca_biplot.Rmd" target="_blank">here</a>.  The associated bibliography file is <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/pretty_pca_biplot.bib" target="_blank">here</a>.  The data can be downloaded <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/data/farmstress.RData" target="_blank">here</a>.
+It is not an overstatement to say that the default output for a Principal Components Analysis (PCA) biplot using the <b>biplot()</b> function in R is <i>gross</i>.  An example of how bad it can be without modification is shown below using the farmworker stress data (discussed in detail <a href="https://www.waderstats.com/using-principal-components-analysis-pca-to-analyze-latino-stress-by-agricultural-season-and-occupation/" target="_blank">here</a>).
 
 ![](farmstressS1_default_biplot.png)
+
+This presentation will show you how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative PCA biplot [@ggplot2].  Throughout, we will use the R programming language and assume the user is using Rstudio to compile their R markdown files into HTML [@Rlang2020; @Rstudio2020].  If you want to follow along with the R markdown, it is downloadable  <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/pretty_pca_biplot.Rmd" target="_blank">here</a>.  The associated bibliography file is <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/pretty_pca_biplot.bib" target="_blank">here</a>.  The data can be downloaded <a href="https://waderstats.com/rstudio-files/pretty_pca_biplot/data/farmstress.RData" target="_blank">here</a>.
 
 # Libraries
 
@@ -43,7 +43,7 @@ The data are loaded from a previously constructed R data set and then subset onl
 # Load the data
 load("data/farmstress.RData")
 
-# Season when the farm workers are the most active.
+# Season when the farmworkers are the most active.
 farmstressS1 <- na.omit(farmstress[which(farmstress$season == "Thinning"), ])
 
 # There is no variance to quantify in these columns
@@ -53,7 +53,7 @@ farmstressS1 <- farmstressS1[, (-1)*which(colnames(farmstressS1) == "druguse")]
 # Variable to hold the occupation (e.g. farmworker vs. non-farmworker)
 farmstressS1Occupation <- farmstressS1$occupation
 
-# A dataframe that remove occupation and season so it contains only numeric values.
+# A dataframe that removes occupation and season so it contains only numeric values.
 farmstressS1 <- farmstressS1[, c(-1, -2)]
 ```
 
@@ -64,13 +64,13 @@ The PCA code for farm stress data is shown below.  Generally, any PCA's first st
 We use the <b>prcomp()</b> function to do the PCA and subsequently extract the loadings, scores matrix, and feature importance as measured by how much each of the variability each PC axis explains in the observed data.
 
 ```{r pcaAnalysis, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE}
-# Make the features comparable by centering each column around it's mean.  Since the data are already on the same scale, we do not need to also divide by their respective variance (e.g., scale = FALSE).
+# Make the features comparable by centering each column around its mean.  Since the data are already on the same scale, we do not need to also divide by their respective variance (e.g., scale = FALSE).
 farmstressS1 <- scale(farmstressS1, center = TRUE, scale = FALSE)
 
-# This function does all of the math to do the PC matrix factorization.
+# This function does all of the math to create the PC matrix factorization.
 farmstressS1_pca <- prcomp(farmstressS1, center = FALSE, scale. = FALSE, retx = TRUE)
 
-# The loadings (e.g., correlations), scores (e.g., projections) matricies, and importance
+# Pieces from the PCA used in the biplot.
 farmstressS1_pca_loadings <- farmstressS1_pca$rotation # Loadings Matrix
 farmstressS1_pca_scores <- predict(farmstressS1_pca) # Scores Matris
 farmstressS1_pca_importance <- summary(farmstressS1_pca)$importance # Explained Variance
