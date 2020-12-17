@@ -294,7 +294,10 @@ p1</code></pre>
 <p>To express the loadings in the two dimensional PC space, we plot arrows that are the same length as to how well each original feature loads onto the PC space as measure by their correlation.</p>
 <pre class="r"><code>p2 &lt;- p1 + 
   geom_segment(data = plotDataLoadings, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.03, &quot;npc&quot;)), alpha = 0.2) + 
-  geom_text(data = plotDataLoadings, mapping = aes(x = PC1, y = PC2, label = rownames(plotDataLoadings)), hjust = 1, vjust = -0.2, colour = &quot;darkred&quot;, size = 4, check_overlap = TRUE)</code></pre>
+  geom_text(data = plotDataLoadings, mapping = aes(x = PC1, y = PC2, label = rownames(plotDataLoadings)), hjust = 1, vjust = -0.2, colour = &quot;darkred&quot;, size = 4, check_overlap = TRUE)
+
+p2</code></pre>
+<p><img src="pretty_pca_biplot_files/figure-html/pcStressBiplot3-1.png" width="864" /></p>
 <div id="label-the-axes" class="section level2">
 <h2>Label the Axes</h2>
 <p>The X and Y labels can also contain information. In this case, we add the proportion of variance explained by the first two PCs, respectively.</p>

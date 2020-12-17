@@ -123,6 +123,8 @@ To express the loadings in the two dimensional PC space, we plot arrows that are
 p2 <- p1 + 
   geom_segment(data = plotDataLoadings, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.03, "npc")), alpha = 0.2) + 
   geom_text(data = plotDataLoadings, mapping = aes(x = PC1, y = PC2, label = rownames(plotDataLoadings)), hjust = 1, vjust = -0.2, colour = "darkred", size = 4, check_overlap = TRUE)
+
+p2
 ```
 
 ## Label the Axes
