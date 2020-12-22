@@ -18,7 +18,7 @@ It is not an overstatement to say that the default output for a Principal Compon
 
 ![](farmstressS1_default_biplot.png)
 
-This presentation will show how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative PCA biplot [@ggplot2].  Throughout, this presentation will use the R programming language and assume the user is using Rstudio to compile their R markdown files into HTML [@Rlang2020; @Rstudio2020].  All of the files used in this presentation can be downloaded from the Git repository <code>git clone <span>https</span>://git.waderstats.com/pretty_pca_biplot/</code>.
+This presentation will show how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative PCA biplot [@ggplot2].  Throughout, this presentation uses the R programming language and assumes the end user is taking advantage of RStudio IDE to compile their R markdown files into HTML [@Rlang2020; @Rstudio2020].  All of the files needed to reproduce these results can be downloaded from the Git repository <code>git clone <span>https</span>://git.waderstats.com/pretty_pca_biplot/</code>.
 
 # Libraries
 
