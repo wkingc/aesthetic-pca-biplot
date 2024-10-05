@@ -11,14 +11,23 @@
 
 
 
-<title>aesthetic_pca_biplot.utf8</title>
+<title>aesthetic_pca_biplot.knit</title>
 
-<script src="aesthetic_pca_biplot_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="aesthetic_pca_biplot_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="aesthetic_pca_biplot_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="aesthetic_pca_biplot_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="aesthetic_pca_biplot_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="aesthetic_pca_biplot_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="aesthetic_pca_biplot_files/navigation-1.1/tabsets.js"></script>
 <script src="aesthetic_pca_biplot_files/navigation-1.1/codefolding.js"></script>
 <link href="aesthetic_pca_biplot_files/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
@@ -34,11 +43,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -51,33 +55,31 @@ if (window.hljs) {
 
 
 
+
+
 <style type="text/css">
-h1 {
-  font-size: 34px;
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-h1.title {
-  font-size: 38px;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-h2 {
-  font-size: 30px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-h3 {
-  font-size: 24px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
-
 
 
 
@@ -87,10 +89,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -107,6 +105,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
@@ -119,13 +123,12 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -133,16 +136,9 @@ summary {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -186,11 +182,11 @@ summary {
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -206,11 +202,11 @@ summary {
 <h1>Introduction</h1>
 <p>It is not an overstatement to say that the default output for a Principal Components Analysis (PCA) biplot using the <b>biplot()</b> function in R is <i>gross</i>. An example of how bad it can be without modification is shown below using the farmworker stress data (discussed in detail <a href="https://www.waderstats.com/using-principal-components-analysis-pca-to-analyze-latino-stress-by-agricultural-season-and-occupation/" target="_blank">here</a>).</p>
 <p><img src="farmstressS1_default_biplot.png" /></p>
-<p>This presentation will show how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative PCA biplot <span class="citation">(Wickham <a href="#ref-ggplot2" role="doc-biblioref">2016</a>)</span>. Throughout, this presentation uses the R programming language and assumes the end user is taking advantage of RStudio IDE to compile their R markdown files into HTML <span class="citation">(R Core Team <a href="#ref-Rlang2020" role="doc-biblioref">2020</a>; RStudio Team <a href="#ref-Rstudio2020" role="doc-biblioref">2020</a>)</span>. All of the files needed to reproduce these results can be downloaded from the Git repository <code>git clone <span>https</span>://git.waderstats.com/aesthetic_pca_biplot/</code>.</p>
+<p>This presentation will show how to use the output from the <b>prcomp()</b> function with the <i>ggplot2</i> library to create a more aesthetically pleasing and informative PCA biplot <span class="citation">(<a href="#ref-ggplot2">Wickham 2016</a>)</span>. Throughout, this presentation uses the R programming language and assumes the end user is taking advantage of RStudio IDE to compile their R markdown files into HTML <span class="citation">(<a href="#ref-Rlang2020">R Core Team 2020</a>; <a href="#ref-Rstudio2020">RStudio Team 2020</a>)</span>. All of the files needed to reproduce these results can be downloaded from the Git repository <code>git clone <span>https</span>://git.waderstats.com/aesthetic_pca_biplot/</code>.</p>
 </div>
 <div id="libraries" class="section level1">
 <h1>Libraries</h1>
-<p>The libraries <i>knitr</i>, <i>bookdown</i>, <i>kableExtra</i>, and <i>DT</i>, generate the HTML output <span class="citation">(Xie <a href="#ref-knitr" role="doc-biblioref">2019</a>, <a href="#ref-bookdown" role="doc-biblioref">2018</a>; Zhu <a href="#ref-kableExtra" role="doc-biblioref">2019</a>; Xie, Cheng, and Tan <a href="#ref-DT" role="doc-biblioref">2018</a>)</span>. The <i>ggplot2</i> package is used to generate the final biplot <span class="citation">(Wickham <a href="#ref-ggplot2" role="doc-biblioref">2016</a>)</span>.</p>
+<p>The libraries <i>knitr</i>, <i>bookdown</i>, <i>kableExtra</i>, and <i>DT</i>, generate the HTML output <span class="citation">(<a href="#ref-knitr">Xie 2019</a>, <a href="#ref-bookdown">2018</a>; <a href="#ref-kableExtra">Zhu 2019</a>; <a href="#ref-DT">Xie, Cheng, and Tan 2018</a>)</span>. The <i>ggplot2</i> package is used to generate the final biplot <span class="citation">(<a href="#ref-ggplot2">Wickham 2016</a>)</span>.</p>
 <pre class="r"><code>package_loader &lt;- function(x, ...) {
   if (x %in% rownames(installed.packages()) == FALSE) install.packages(x)
   library(x, ...)
@@ -329,65 +325,65 @@ p4</code></pre>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.0.3 (2020-10-10)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04.1 LTS
+<pre><code>## R version 4.4.1 (2024-06-14)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sonoma 14.6.1
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
-##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/New_York
+## tzcode source: internal
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices datasets  utils     methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.2    DT_0.16          kableExtra_1.3.1 bookdown_0.21   
-## [5] knitr_1.30      
+## [1] ggplot2_3.5.1    DT_0.33          kableExtra_1.4.0 bookdown_0.40   
+## [5] knitr_1.48      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_4.0.3    pillar_1.4.7      tools_4.0.3       digest_0.6.27    
-##  [5] evaluate_0.14     lifecycle_0.2.0   tibble_3.0.4      gtable_0.3.0     
-##  [9] viridisLite_0.3.0 pkgconfig_2.0.3   rlang_0.4.9       rstudioapi_0.13  
-## [13] yaml_2.2.1        xfun_0.19         withr_2.3.0       httr_1.4.2       
-## [17] stringr_1.4.0     dplyr_1.0.2       xml2_1.3.2        generics_0.1.0   
-## [21] htmlwidgets_1.5.3 vctrs_0.3.5       tidyselect_1.1.0  webshot_0.5.2    
-## [25] grid_4.0.3        glue_1.4.2        R6_2.5.0          rmarkdown_2.6    
-## [29] farver_2.0.3      purrr_0.3.4       magrittr_2.0.1    scales_1.1.1     
-## [33] htmltools_0.5.0   ellipsis_0.3.1    rvest_0.3.6       colorspace_2.0-0 
-## [37] renv_0.12.2       labeling_0.4.2    stringi_1.5.3     munsell_0.5.0    
-## [41] crayon_1.3.4</code></pre>
+##  [1] gtable_0.3.5      jsonlite_1.8.9    highr_0.11        compiler_4.4.1   
+##  [5] renv_1.0.10       xml2_1.3.6        stringr_1.5.1     jquerylib_0.1.4  
+##  [9] systemfonts_1.1.0 scales_1.3.0      yaml_2.3.10       fastmap_1.2.0    
+## [13] R6_2.5.1          labeling_0.4.3    htmlwidgets_1.6.4 tibble_3.2.1     
+## [17] munsell_0.5.1     svglite_2.1.3     bslib_0.8.0       pillar_1.9.0     
+## [21] rlang_1.1.4       utf8_1.2.4        cachem_1.1.0      stringi_1.8.4    
+## [25] xfun_0.48         sass_0.4.9        viridisLite_0.4.2 cli_3.6.3        
+## [29] withr_3.0.1       magrittr_2.0.3    digest_0.6.37     grid_4.4.1       
+## [33] rstudioapi_0.16.0 lifecycle_1.0.4   vctrs_0.6.5       evaluate_1.0.0   
+## [37] glue_1.8.0        farver_2.1.2      fansi_1.0.6       colorspace_2.1-1 
+## [41] rmarkdown_2.28    tools_4.4.1       pkgconfig_2.0.3   htmltools_0.5.8.1</code></pre>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
 <!-- This is needed to resize iframe content. Please ignore if duplicationg this R markdown file -->
 <script type="text/javascript" src="https://www.waderstats.com/wp-includes/js/iframe-resizer/js/iframeResizer.contentWindow.min.js" defer></script>
-<div id="refs" class="references">
-<div id="ref-Rlang2020">
-<p>R Core Team. 2020. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Rlang2020" class="csl-entry">
+R Core Team. 2020. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
-<div id="ref-Rstudio2020">
-<p>RStudio Team. 2020. <em>RStudio: Integrated Development Environment for R</em>. Boston, MA: RStudio, PBC. <a href="http://www.rstudio.com/">http://www.rstudio.com/</a>.</p>
+<div id="ref-Rstudio2020" class="csl-entry">
+RStudio Team. 2020. <em>RStudio: Integrated Development Environment for r</em>. Boston, MA: RStudio, PBC. <a href="http://www.rstudio.com/">http://www.rstudio.com/</a>.
 </div>
-<div id="ref-ggplot2">
-<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.</p>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
-<div id="ref-bookdown">
-<p>Xie, Yihui. 2018. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.</p>
+<div id="ref-bookdown" class="csl-entry">
+Xie, Yihui. 2018. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
 </div>
-<div id="ref-knitr">
-<p>———. 2019. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.name/knitr/">https://yihui.name/knitr/</a>.</p>
+<div id="ref-knitr" class="csl-entry">
+———. 2019. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.name/knitr/">https://yihui.name/knitr/</a>.
 </div>
-<div id="ref-DT">
-<p>Xie, Yihui, Joe Cheng, and Xianying Tan. 2018. <em>DT: A Wrapper of the Javascript Library ’Datatables’</em>. <a href="https://CRAN.R-project.org/package=DT">https://CRAN.R-project.org/package=DT</a>.</p>
+<div id="ref-DT" class="csl-entry">
+Xie, Yihui, Joe Cheng, and Xianying Tan. 2018. <em>DT: A Wrapper of the JavaScript Library ’DataTables’</em>. <a href="https://CRAN.R-project.org/package=DT">https://CRAN.R-project.org/package=DT</a>.
 </div>
-<div id="ref-kableExtra">
-<p>Zhu, Hao. 2019. <em>KableExtra: Construct Complex Table with ’Kable’ and Pipe Syntax</em>. <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a>.</p>
+<div id="ref-kableExtra" class="csl-entry">
+Zhu, Hao. 2019. <em>kableExtra: Construct Complex Table with ’Kable’ and Pipe Syntax</em>. <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a>.
 </div>
 </div>
 </div>
@@ -419,7 +415,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
