@@ -1,4 +1,6 @@
 ---
+title: "A More Aesthetic PCA Biplot in R"
+author: "Wade K. Copeland"
 bibliography: aesthetic_pca_biplot.bib
 biblio-style: apalike
 link-citations: yes
@@ -59,7 +61,7 @@ farmstressS1 <- farmstressS1[, c(-1, -2)]
 
 # PCA Analysis
 
-The PCA code for farm stress data is shown below.  Generally, any PCA's first step is to scale the data so that each feature is comparable, followed by mean centering, shifting the data on their axes without altering any stochastic properties.  In this specific case, but generally, not so, scaling isn't necessary since each column is measured using the same Likert-type scale.
+The PCA code for farm stress data is shown below.  Generally, any PCA's first step is to scale the data so that each feature is comparable, followed by mean centering, shifting the data on their axes without altering any stochastic properties.  In this case, but generally not so, scaling isn't necessary since each column is measured using the same Likert-type scale.
 
 We use the <b>prcomp()</b> function to do the PCA and subsequently extract the loadings, scores matrix, and feature importance as measured by how much each of the variability each PC axis explains in the observed data.
 
@@ -78,7 +80,7 @@ farmstressS1_pca_importance <- summary(farmstressS1_pca)$importance # Explained 
 
 # PCA Biplot
 
-The PCA biplot goal is to plot the projections of the observed data onto the first two PC axes and how well each of the features from the original feature space load onto the new factorization.  To that end, we can deconstruct the process into five steps:
+The goal of a PCA biplot is to plot the projections of the observed data onto the first two PC axes and see how well each of the features from the original feature space load onto the new factorization.  To that end, we can deconstruct the process into five steps:
 
 1. Setup the data to be plotted.
 2. Plot the scores.
@@ -105,7 +107,7 @@ plotDataLoadings <- as.data.frame(farmstressS1_pca_loadings)
 
 ## Plot the Scores
 
-The first thing to do is plot the scores, and since we have a categorical occupation, color the points as such to see if there is any separation between the two groups.  The default colors are not very nice, so we choose two different (yes, colorblind-friendly!) colors using the <b>scale_color_manual()</b> function.
+The first thing to do is plot the scores, and since we have a categorical occupation, color the points to see if there is any separation between the two groups.  The default colors are not very nice, so we choose two different colors using the <b>scale_color_manual()</b> function.
 
 ```{r pcStressBiplot2, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE, fig.width = 9, fig.height = 7}
 p1 <- ggplot() + 
