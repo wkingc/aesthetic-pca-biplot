@@ -16,7 +16,7 @@ output:
 
 # Introduction
 
-It is not an overstatement to say that the default output for a Principal Components Analysis (PCA) biplot using the <b>biplot()</b> function in R is <i>gross</i>.  An example of how bad it can be without modification is shown below using the farmworker stress data (discussed in detail at FIX THIS!).
+It is not an overstatement to say that the default output for a Principal Components Analysis (PCA) biplot using the <b>biplot()</b> function in R is <i>gross</i>.  An example of how bad it can be without modification is shown below using the farmworker stress data (discussed in detail at <a href="https://wkingc.github.io/pca-with-application/" target="_blank">hhttps://wkingc.github.io/pca-with-application/</a>).
 
 ![](farmstressS1_default_biplot.png)
 
