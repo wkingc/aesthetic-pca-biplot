@@ -28,8 +28,8 @@ The libraries <i>knitr</i>, <i>bookdown</i>, <i>kableExtra</i>, and <i>DT</i>, g
 
 ```{r libraries, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE}
 package_loader <- function(x, ...) {
-  if (x %in% rownames(installed.packages()) == FALSE) install.packages(x)
-  library(x, ...)
+    if (x %in% rownames(installed.packages()) == FALSE) install.packages(x)
+    library(x, ...)
 }
 
 packages <- c("knitr", "bookdown", "kableExtra", "DT", "ggplot2")
@@ -97,7 +97,7 @@ The scale of the feature loadings is between zero and one because they are corre
 plotDataScores <- cbind(occupation = farmstressS1Occupation, as.data.frame(farmstressS1_pca_scores[, c("PC1", "PC2")]))
 
 # We want to use min-max feature scaling on the scores so they are between zero and one, the same as the loadings.
-normalize <- function(x) return ((x - min(x)) / (max(x) - min(x)))
+normalize <- function(x) return((x - min(x)) / (max(x) - min(x)))
 
 plotDataScores[, "PC1"] <- scale(normalize(plotDataScores[, "PC1"]), center = TRUE, scale = FALSE)
 plotDataScores[, "PC2"] <- scale(normalize(plotDataScores[, "PC2"]), center = TRUE, scale = FALSE)
@@ -123,8 +123,8 @@ To express the loadings in the two dimensional PC space, we plot arrows that are
 
 ```{r pcStressBiplot3, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE, fig.width = 9, fig.height = 7}
 p2 <- p1 + 
-  geom_segment(data = plotDataLoadings, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.03, "npc")), alpha = 0.2) + 
-  geom_text(data = plotDataLoadings, mapping = aes(x = PC1, y = PC2, label = rownames(plotDataLoadings)), hjust = 1, vjust = -0.2, colour = "darkred", size = 4, check_overlap = TRUE)
+    geom_segment(data = plotDataLoadings, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.03, "npc")), alpha = 0.2) + 
+    geom_text(data = plotDataLoadings, mapping = aes(x = PC1, y = PC2, label = rownames(plotDataLoadings)), hjust = 1, vjust = -0.2, colour = "darkred", size = 4, check_overlap = TRUE)
 
 p2
 ```
@@ -135,8 +135,8 @@ The X and Y labels can also contain information.  In this case, we add the propo
 
 ```{r pcStressBiplot4, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE, fig.width = 9, fig.height = 7}
 p3 <- p2 + 
-  xlab(paste("PC1 (", round(farmstressS1_pca_importance["Proportion of Variance", "PC1"]*100, 1),"%)", sep = "")) + 
-  ylab(paste("PC2 (", round(farmstressS1_pca_importance["Proportion of Variance", "PC2"]*100, 1),"%)", sep = ""))
+    xlab(paste("PC1 (", round(farmstressS1_pca_importance["Proportion of Variance", "PC1"]*100, 1),"%)", sep = "")) +
+    ylab(paste("PC2 (", round(farmstressS1_pca_importance["Proportion of Variance", "PC2"]*100, 1),"%)", sep = ""))
 
 p3
 ```
@@ -147,7 +147,8 @@ We can make some finish touches by updating the basic theme to make the plot loo
 
 ```{r pcStressBiplot5, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE, fig.width = 9, fig.height = 7}
 p4 <- p3 + 
-  theme(axis.line = element_line(colour = "black"),
+    theme(
+        axis.line = element_line(colour = "black"),
         panel.border = element_rect(colour = "black", fill = NA, size = 1),
         axis.text = element_text(size = 12),
         axis.text.x = element_text(angle = 50, hjust = 1),
