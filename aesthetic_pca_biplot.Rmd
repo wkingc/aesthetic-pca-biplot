@@ -27,14 +27,11 @@ This presentation will show how to use the output from the <b>prcomp()</b> funct
 The libraries <i>knitr</i>, <i>bookdown</i>, <i>kableExtra</i>, and <i>DT</i>, generate the HTML output [@knitr; @bookdown; @kableExtra; @DT]. The <i>ggplot2</i> package is used to generate the final biplot [@ggplot2].
 
 ```{r libraries, eval = TRUE, echo = TRUE, results = TRUE, warning = FALSE, message = FALSE}
-package_loader <- function(x, ...) {
-    if (x %in% rownames(installed.packages()) == FALSE) install.packages(x)
-    library(x, ...)
-}
-
-packages <- c("knitr", "bookdown", "kableExtra", "DT", "ggplot2")
-
-invisible(sapply(X = packages, FUN = package_loader, character.only = TRUE))
+library("knitr")
+library("bookdown")
+library("kableExtra")
+library("DT")
+library("ggplot2")
 ```
 
 # Data Setup
